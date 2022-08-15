@@ -11,6 +11,17 @@ class WORDUPAND_API UWordUpGameInstance : public UGameInstance {
 public:
 	UFUNCTION(BlueprintCallable)
 	void showMenu();
+	UFUNCTION()
+	void clientMessage(const FString& message);
+	
+	UFUNCTION(Exec)
+	void pair_server_send(const FString& message) const;
+	UFUNCTION(Exec)
+	void free_roam(int setting) const;
+	UFUNCTION(Exec)
+	void host();
+	UFUNCTION(Exec)
+	void join(const FString& address);
 	
 	UWordUpGameInstance(const FObjectInitializer& object_initializer);
 	virtual void Init() override;

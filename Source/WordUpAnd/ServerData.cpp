@@ -26,7 +26,7 @@ void ServerData::initSession() {
 	);
 	const int starting_word_i = FMath::RandRange(0, Words::WORDS_3_CT - 1);
 	strcpy(center, "******");
-	memcpy(center, words.words_3[starting_word_i], 3 * sizeof(char));
+	// memcpy(center, words.words_3[starting_word_i], 3 * sizeof(char));
 
 	p1_letter_ct = P_HAND_MAX;
 	p2_letter_ct = P_HAND_MAX;
@@ -77,10 +77,10 @@ void ServerData::initSession() {
 	shuffleHand(P1);
 	shuffleHand(P2);
 	
-	print("%hs", p1_hand);
-	print("%hs", p2_hand);
-	print("%hs", center);
-	print("%hs", cblock);
+	// print("%hs", p1_hand);
+	// print("%hs", p2_hand);
+	// print("%hs", center);
+	// print("%hs", cblock);
 	
 	// print("draw pool len: %llu", strlen(draw_pool));
 	// print("%hs", words.words_3[6]);

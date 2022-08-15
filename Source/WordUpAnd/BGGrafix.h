@@ -39,7 +39,8 @@ public:
 	
 	ABGGrafix();
 	virtual void Tick(float DeltaTime) override;
-	void setBG(BGGRAFIX_BG_NAME name);
+	void setBG(BGGRAFIX_BG_NAME name=BGGRAFIX_PURPLE_PILLARS);
+	void tear_down();
 
 protected:
 	virtual void BeginPlay() override;
@@ -54,6 +55,7 @@ private:
 	float spawn_radius_naive;
 	float spawn_radius;
 	float spawn_radius_sq;
+	bool ticking = true;
 
 	FVector purple_pillars_scale = FVector(4.0f, 4.0f, 8.0f);
 };

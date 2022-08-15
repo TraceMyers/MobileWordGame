@@ -18,7 +18,7 @@ ABGGrafix::ABGGrafix() {
 
 	static ConstructorHelpers::FClassFinder<ABGGrafixObject>
 		BGGrafixObject_BP(TEXT("/Game/Blueprints/BP_BGGrafixObject.BP_BGGrafixObject_C"));
-	BP_BGGrafixObject = BGGrafixObject_BP.Class;	
+	BP_BGGrafixObject = BGGrafixObject_BP.Class;
 }
 
 void ABGGrafix::BeginPlay() {
@@ -46,6 +46,9 @@ void ABGGrafix::BeginPlay() {
 
 void ABGGrafix::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (!ticking) {
+		return;
+	}
 	const FVector bg_loc = GetActorLocation();
 	for (auto &obj : objects) {
 		const FVector next_loc = obj->GetActorLocation() + obj_move_dir * speed + DeltaTime;
@@ -60,6 +63,7 @@ void ABGGrafix::Tick(float DeltaTime) {
 }
 
 void ABGGrafix::setBG(BGGRAFIX_BG_NAME name) {
+	bg_plane->SetVisibility(true);
 	obj_rotation.Pitch = pitch_rot;
 	obj_rotation.Roll = travel_rot;
 	objects[0]->SetActorRotation(obj_rotation);
@@ -81,5 +85,13 @@ void ABGGrafix::setBG(BGGRAFIX_BG_NAME name) {
 			obj->SetActorLocation(rand_init_progress_loc);
 		}
 	}
+}
+
+void ABGGrafix::tear_down() {
+	bg_plane->SetVisibility(false);
+	// for (auto& object : objects) {
+	// 	object->Destroy();
+	// }
+	objects.Empty();
 }
 

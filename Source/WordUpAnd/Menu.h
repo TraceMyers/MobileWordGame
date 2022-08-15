@@ -26,10 +26,9 @@ class WORDUPAND_API UMenu : public UUserWidget {
 public:
 	virtual bool Initialize() override;
 	void setGameInstance(class UWordUpGameInstance* game_instance);
-	void begin();
 	virtual void OnAnimationFinishedPlaying(UUMGSequencePlayer& Player) override;
 	void show(APlayerController* player_controller);
-	void hide(APlayerController* player_controller);
+	void hide();
 
 protected:
 

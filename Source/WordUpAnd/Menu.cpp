@@ -41,10 +41,6 @@ void UMenu::setGameInstance(UWordUpGameInstance* _game_instance) {
 	game_instance = _game_instance;
 }
 
-void UMenu::begin() {
-	
-}
-
 void UMenu::OnAnimationFinishedPlaying(UUMGSequencePlayer& Player) {
 	Super::OnAnimationFinishedPlaying(Player);
 	const UWidgetAnimation* anim = Player.GetAnimation();
@@ -78,7 +74,7 @@ void UMenu::show(APlayerController* player_controller) {
 	transitionMenu(MENU_NAME_MAIN);	
 }
 
-void UMenu::hide(APlayerController* player_controller) {
+void UMenu::hide() {
 	RemoveFromViewport();	
 }
 
