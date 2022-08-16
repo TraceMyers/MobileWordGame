@@ -95,7 +95,5 @@ void UWordUpGameInstance::join(const FString& address) {
  */
 
 void UWordUpGameInstance::call_url(const FString& address) {
-	const FString params = "";
-	FString error = "";
-	FGenericPlatformProcess::LaunchURL(*address, *params, &error);
+	FPlatformProcess::LaunchURL(*address, nullptr, nullptr);
 }
