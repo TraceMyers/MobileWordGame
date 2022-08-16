@@ -22,6 +22,8 @@ public:
 	void host();
 	UFUNCTION(Exec)
 	void join(const FString& address);
+	UFUNCTION(Exec)
+	static void call_url(const FString& address);
 	
 	UWordUpGameInstance(const FObjectInitializer& object_initializer);
 	virtual void Init() override;

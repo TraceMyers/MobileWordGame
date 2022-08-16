@@ -87,3 +87,15 @@ void UWordUpGameInstance::join(const FString& address) {
 	}
 	player_controller->ClientTravel(address, ETravelType::TRAVEL_Absolute);
 }
+
+/*
+ * A open mapname?listen (on port 17777)
+ * A call url to B IP:17777
+ * B open host ip
+ */
+
+void UWordUpGameInstance::call_url(const FString& address) {
+	const FString params = "";
+	FString error = "";
+	FGenericPlatformProcess::LaunchURL(*address, *params, &error);
+}
