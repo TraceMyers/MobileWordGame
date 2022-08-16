@@ -8,6 +8,23 @@
 #include "Kismet/GameplayStatics.h"
 
 
+// buggy include, windows code
+#define _WIN32_WINNT_WIN10_TH2 0
+#define _WIN32_WINNT_WIN10_RS1 0
+#define _WIN32_WINNT_WIN10_RS2 0
+#define _WIN32_WINNT_WIN10_RS3 0
+#define _WIN32_WINNT_WIN10_RS4 0
+#define _WIN32_WINNT_WIN10_RS5 0
+
+#define CURL_STATICLIB
+#include "curl/curl.h"
+
+#pragma comment (lib, "Normaliz.lib")
+#pragma comment (lib, "Ws2_32.lib")
+#pragma comment (lib, "Wldap32.lib")
+#pragma comment (lib, "Crypt32.lib")
+#pragma comment (lib, "advapi32.lib")
+
 UWordUpGameInstance::UWordUpGameInstance(const FObjectInitializer& object_initializer) {
 	static ConstructorHelpers::FClassFinder<UUserWidget> MENU_BP(TEXT("/Game/Blueprints/BP_MENU.BP_MENU_C"));
 	if (!MENU_BP.Class) {
@@ -58,13 +75,13 @@ void UWordUpGameInstance::clientMessage(const FString& message) {
 
 void UWordUpGameInstance::host() {
 	print("hosting");
-	
+
 	UWorld* world = GetWorld();
 	if (!world) {
 		return;
 	}
 	menu->hide();
-	ABGGrafix* bg_grafix = 
+	ABGGrafix* bg_grafix =
 		Cast<ABGGrafix>(UGameplayStatics::GetActorOfClass(world, ABGGrafix::StaticClass()));
 	if (bg_grafix) {
 		bg_grafix->tear_down();
@@ -74,13 +91,13 @@ void UWordUpGameInstance::host() {
 
 void UWordUpGameInstance::join(const FString& address) {
 	print("joining %s", *address);
-	
+
 	APlayerController* player_controller = GetFirstLocalPlayerController();
 	if (!player_controller) {
 		return;
 	}
 	menu->hide();
-	ABGGrafix* bg_grafix = 
+	ABGGrafix* bg_grafix =
 		Cast<ABGGrafix>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGGrafix::StaticClass()));
 	if (bg_grafix) {
 		bg_grafix->tear_down();
@@ -95,5 +112,11 @@ void UWordUpGameInstance::join(const FString& address) {
  */
 
 void UWordUpGameInstance::call_url(const FString& address) {
-	FPlatformProcess::LaunchURL(*address, nullptr, nullptr);
+	print("curling %s", *address);
+	CURL *curl = curl_easy_init();
+	curl_easy_setopt(curl, CURLOPT_URL, *address);
+	curl_easy_setopt(curl, CURLOPT_LOCALPORT, 7777L);
+	const CURLcode code = curl_easy_perform(curl);
+	print("curl code %d", code);
+	curl_easy_cleanup(curl);
 }
